@@ -1,0 +1,19 @@
+import { Link } from "react-router-dom";
+
+export default function HomeSafe() {
+  return (
+    <main style={{ maxWidth: 760, margin: "40px auto", padding: 16, fontFamily: "system-ui, Arial" }}>
+      <h1>QR Sign-in for Open Houses</h1>
+      <p style={{ color: "#555" }}>
+        Start by creating an Agent and an Event, then print a poster with a QR that opens the sign-in form.
+      </p>
+
+      <ul style={{ lineHeight: 2 }}>
+        <li><Link to="/admin">Admin — Create Agent & Event</Link></li>
+        <li><Link to="/poster/REPLACE_WITH_EVENT_ID">Poster (replace with real eventId)</Link></li>
+        <li><Link to="/e/REPLACE_WITH_EVENT_ID">Public Sign-in (existing route)</Link></li>
+        <li><Link to="/dashboard">Dashboard (your existing page)</Link></li>
+      </ul>
+    </main>
+  );
+}
