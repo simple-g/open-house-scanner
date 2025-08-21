@@ -11,10 +11,11 @@ import Dashboard from "./pages/Dashboard";
 import EventSuccess from "./pages/EventSuccess";
 import NotFound from "./pages/NotFound";
 
-/* 👇 add these three imports */
+/* NEW imports */
 import Admin from "./pages/Admin";
 import Poster from "./pages/Poster";
 import AdminSignins from "./pages/AdminSignins";
+import HomeSafe from "./pages/HomeSafe";   // NEW safe landing page
 
 const queryClient = new QueryClient();
 
@@ -25,19 +26,21 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          {/* your existing routes */}
-          <Route path="/" element={<Index />} />
+          {/* Use the safe landing page for now */}
+          <Route path="/" element={<HomeSafe />} />
+
+          {/* Your existing routes stay */}
           <Route path="/create-event" element={<CreateEvent />} />
           <Route path="/e/:eventId" element={<SignIn />} />
           <Route path="/event/:eventId/success" element={<EventSuccess />} />
           <Route path="/dashboard" element={<Dashboard />} />
 
-          {/* 👇 new backend-powered routes */}
+          {/* Backend-powered routes we added */}
           <Route path="/admin" element={<Admin />} />
           <Route path="/poster/:id" element={<Poster />} />
           <Route path="/admin/signins/:id" element={<AdminSignins />} />
 
-          {/* keep catch-all last */}
+          {/* 404 last */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
