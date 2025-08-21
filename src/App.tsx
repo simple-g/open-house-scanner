@@ -1,52 +1,31 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-/* Your existing pages */
-import CreateEvent from "./pages/CreateEvent";
-import SignIn from "./pages/SignIn";
-import Dashboard from "./pages/Dashboard";
-import EventSuccess from "./pages/EventSuccess";
-import NotFound from "./pages/NotFound";
-
-/* NEW: backend-powered pages */
+// Backend-powered pages we added
 import Admin from "./pages/Admin";
 import Poster from "./pages/Poster";
 import AdminSignins from "./pages/AdminSignins";
 
-const queryClient = new QueryClient();
+// Your existing public sign-in page
+import SignIn from "./pages/SignIn";
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          {/* Home goes straight to Admin */}
-          <Route path="/" element={<Admin />} />
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Home goes straight to Admin to keep things simple */}
+        <Route path="/" element={<Admin />} />
+        <Route path="/admin" element={<Admin />} />
 
-          {/* Also keep /admin explicitly */}
-          <Route path="/admin" element={<Admin />} />
+        {/* Backend routes */}
+        <Route path="/poster/:id" element={<Poster />} />
+        <Route path="/admin/signins/:id" element={<AdminSignins />} />
 
-          {/* Backend routes */}
-          <Route path="/poster/:id" element={<Poster />} />
-          <Route path="/admin/signins/:id" element={<AdminSignins />} />
+        {/* Existing public sign-in route */}
+        <Route path="/e/:eventId" element={<SignIn />} />
 
-          {/* Your existing routes */}
-          <Route path="/create-event" element={<CreateEvent />} />
-          <Route path="/e/:eventId" element={<SignIn />} />
-          <Route path="/event/:eventId/success" element={<EventSuccess />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-
-          {/* 404 last */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
-
-export default App;
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
