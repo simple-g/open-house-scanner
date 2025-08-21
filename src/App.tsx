@@ -4,18 +4,17 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Index from "./pages/Index";
+/* Your existing pages */
 import CreateEvent from "./pages/CreateEvent";
 import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
 import EventSuccess from "./pages/EventSuccess";
 import NotFound from "./pages/NotFound";
 
-/* NEW imports */
+/* NEW: backend-powered pages */
 import Admin from "./pages/Admin";
 import Poster from "./pages/Poster";
 import AdminSignins from "./pages/AdminSignins";
-import HomeSafe from "./pages/HomeSafe";   // NEW safe landing page
 
 const queryClient = new QueryClient();
 
@@ -26,19 +25,21 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          {/* Use the safe landing page for now */}
-          <Route path="/" element={<HomeSafe />} />
+          {/* Home goes straight to Admin */}
+          <Route path="/" element={<Admin />} />
 
-          {/* Your existing routes stay */}
+          {/* Also keep /admin explicitly */}
+          <Route path="/admin" element={<Admin />} />
+
+          {/* Backend routes */}
+          <Route path="/poster/:id" element={<Poster />} />
+          <Route path="/admin/signins/:id" element={<AdminSignins />} />
+
+          {/* Your existing routes */}
           <Route path="/create-event" element={<CreateEvent />} />
           <Route path="/e/:eventId" element={<SignIn />} />
           <Route path="/event/:eventId/success" element={<EventSuccess />} />
           <Route path="/dashboard" element={<Dashboard />} />
-
-          {/* Backend-powered routes we added */}
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/poster/:id" element={<Poster />} />
-          <Route path="/admin/signins/:id" element={<AdminSignins />} />
 
           {/* 404 last */}
           <Route path="*" element={<NotFound />} />
